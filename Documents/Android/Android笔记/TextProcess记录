@@ -1,0 +1,179 @@
+1. 对于Fragment的动画效果：如果使用XML的形式定义，那么这里就有一个问题，如何去获取一个Fragment的高度，使其滑出可视位置？
+  初步的结论是：将其沿着边界的位置进行平移，例如最上面的那一块就从0平移到-1028这样保证全部移出即可，其他的以后碰到再说
+  下面贴一些实验代码
+  ativity中的代码
+  --------------------------------------------------------------------------------
+  Fragment frame01 = getFragmentManager().findFragmentByTag("frame01");
+               FragmentTransaction transaction = getFragmentManager().beginTransaction();
+               transaction.setCustomAnimations(R.animator.animator_enter,R.animator.animator_exit);
+               transaction.hide(frame01);
+               transaction.commit();
+  ---------------------------------------------------------------------------------
+  animator_exit代码
+  ---------------------------------------------------------------------------------
+  <set xmlns:android="http://schemas.android.com/apk/res/android">
+    <objectAnimator android:propertyName="Y"
+        android:valueFrom="0dp"
+        android:valueTo="-1028dp"
+        android:duration="1000"
+        />
+    <objectAnimator android:propertyName="alpha"
+        android:duration="300"
+        android:valueFrom="1"
+        android:valueTo="0"/>
+</set>
+------------------------------------------------------------------------------------
+2. 如何去获取一个Fragment的高度？
+  Get the root view for the fragment's layout，这句是在api中说明的，这个是getView（）方法的说明，通过这句话可以得到获取Fragment高度的方法
+  通过获取getView()获取最顶级的view，就可以获取Fragment的高度了
+3. 学习ContentProvider  用来从文件管理器中获取文件
+  1. Android系统继承了Linux系统管理文件的方法，为每一个应用程序分配一个独立的用户ID和用户组ID，而由这个应用程序创建出来的数据文件就赋予相应的用户以及用户组读写的权限，其余用户则无权对该文件进行读写。
+  2. -rw-   rw-    ---     app_17   app_17      33792 2011-11-07 15:50 calendar.db  这是从adb中copy的，从前往后看代表的意义如下
+     第一部分代表这是一个普通文件，所有人可以进行读写，但是不可以执行
+     第二部分代表和这个user在同一个用户组中的所有用户可以进行读取和写入，
+     第三部分代表其他人无权对这个文件进行任何操作
+     第四部分这个是拥有本文件的user
+     第五部分是拥有本文件的用户组
+4. 如何实现一个文件管理器？
+  1. 问题一：如何处理内部存储和外部存储的目录的获取？   还未完成
+  2. 问题二：如何标示一个File是文件还是文件夹？
+      有想法，但是处理起来有点难
+       思路一：使用ListView中的文件名称或者是绝对路径去和view中保存的数据去对比
+       思路二：使用隐藏的标志位来处理这个问题，但是这个是不是有安全问题？
+      总体来说思路一比较好，不容易造成问题，但是会不会造成性能上的卡顿呢？
+5. 如何对View进行定制，来让代码显示正常化？
+  换一种说法：如何实现一个文本编辑器？
+    有点复杂了.....不过要有信心，加油
+6. 做到这个阶段，总体来说，还是挺顺利的，还有一个需求没有实现，这些在后期都会实现的，但是呢？发现了很多的缺点
+    1. 对于Java的机制不熟悉，现在对于Java就相当于熟悉阶段，无法使用Java的很多方面
+    2. 对于Android的源码不熟悉，因为有很多的功能是可以通过Android的源代码来进行定制的，比如在EditText里面有一个拼写检查，正好我想做一个文字匹配，记得还有一个控件也能实现这个效果，但是对于源码无法阅读，这是一个很大的障碍
+
+    综合上面的两个原因，先暂停TextProcess的编写，转向以上两方面的研究
+7. 解决EditText光标颜色的问题
+  解决的办法：使用了反射机制，因为没有直接设置光标颜色的方法，而这个属性是从TextView中拿到的，具体的代码
+    /**
+       * 修改光标颜色   使用了反射  在TextView里面拿到了这个属性值
+       */
+      private void modifyMainViewCursorColor() {
+
+
+          try {
+              Field field = TextView.class.getDeclaredField("mCursorDrawableRes");
+              field.setAccessible(true);
+              field.set(main_view, R.drawable.cursor_color);   //main_view 就是EditText具体的实例
+          } catch (NoSuchFieldException e) {
+              e.printStackTrace();
+          } catch (IllegalAccessException e) {
+              e.printStackTrace();
+          }
+      }
+8. 默认打开文件后显示光标
+   main_view.setFocusableInTouchMode(true);  //默认的情况下显示光标
+
+9. 文件编辑器的主要的主要处理是什么？  从框架的角度来说
+ 行  字符之间的关系
+10. 那这些怎样才能显示到界面上呢？
+ 从绘图开始
+11. 绘图中的问题
+ 在绘制左边的行号的时候，其实就是得到当前行的bound，然后获取top，来确定行号的位置
+ 但是现在有一个问题  就是每次绘制完成，进行下一次绘制的时候都会将上一次的绘制覆盖掉，，如果才能解决这个问题呢？
+ 有一组api是可以解决的，但是忘记怎么使用了  canvas.restore()和canvas.save()  这组api根据描述来说，只能存储图形的平移，旋转等功能放入私有栈中，但对于绘制不起作用
+12. 对于背景的绘制问题，以及光标的位置问题
+ 1. 背景每次绘制都会出现一格，这种现象是错的，因为这个行应该是高亮行，所以不能出现那么多背景
+     这个问题出现的原因为：因为循环多次绘制的原因，在绘制行号的同时将背景也进行了多次的绘制
+     解决办法：将这行代码拿出来，放在循环外面，也就是直接放到onDraw方法体中
+ 2. 光标的位置不正确，应该出现在分割线的后面
+     这个问题不能通过setSelection来解决，因为这个Selection的移动要在已经绘制完成的Text的基础上进行移动，也就是说如果超出Text的长度会出现ArrayOutOfBound异常
+     正确的解决办法是：通过给其设置padding来解决这个问题
+13. 现在来回答上面的 1 和 2 两个问题
+   文件编辑器的主要处理是什么？
+     文件编辑器的主要是提供文件的编辑工作
+   从框架的角度来说  行 字符之间的关系是什么？
+     这个问题  可以用一个API来回答：getLineBounds这个api提供了所有的与行相关的位置信息
+     通过这两个API就可以将行和字符之间的关系联系起来
+   怎样才能显示到界面上呢？
+     步骤：
+       1. 重写onDraw方法
+       2. 获取LineBounds和drawingBounds实例
+       3. 在行的开始绘制行号
+       4. 在行的第二个位置绘制分割线
+       5. 设置paddng来将cursor移动到正确位置
+     demo :
+     @Override
+   protected void onDraw(Canvas canvas) {
+       super.onDraw(canvas);
+       //1. 获取整个view的边界信息
+       Rect drawingRect = new Rect();
+       getDrawingRect(drawingRect);
+       int lineCount = getLineCount();
+       //2. 获取行的边界
+       Rect lineRect = new Rect();
+       getLineBounds(lineCount-1,lineRect);
+       Paint paint = new Paint();
+       int lineHeight = getLineHeight();
+
+       paint.setTextSize(18);
+       //绘制边界
+       Paint paintRec = new Paint();
+       paintRec.setColor(Color.BLACK);
+       paintRec.setStyle(Paint.Style.STROKE);
+       canvas.save();
+       //绘制行号
+       canvas.translate(0,50);
+       int lineNumber = lineRect.bottom / lineHeight;
+       for(int i = 0 ; i < lineNumber;i++){
+           String text = "" + (i+1);
+
+           canvas.drawText(text,0,text.length(),paint);
+
+
+           canvas.translate(0,lineHeight);
+       }
+
+       canvas.restore();
+       canvas.drawLine(50,drawingRect.top,50,drawingRect.bottom,paint);
+       canvas.drawRect(new Rect(0,lineRect.top,lineRect.right,lineRect.bottom),paintRec);
+       setPadding(100,50,0,0);
+   }
+14. 拼写检查去不掉，如果使用了InputType 就会出现无法换行的问题 先忽略
+15. 进行代码重构(延期，现在以功能为主)
+    1. 重构UI框架
+      框架重构的问题
+        1. 想使用ToolBar 来代替自定义的MenuBar，但是自定义的ToolBar不起作用
+            这里有两个解决思路：
+              1.还是自定义然后查找源码找到问题的解决办法
+              2.使用ToolBar然后使用代码来设置这些自定义属性
+            这个问题解决了，不起作用的原因：自定义属性没有在xml文件中使用，并且ToolBar属于ViewGroup，并且我的目的是能够让用户设置这个颜色搭配，也就是说要提供设置接口给用户，所以使用ToolBar
+            也能够解决这个问题
+      框架重构的想法
+        1. 对于MenuBar
+            1. 是必须不能隐藏的，因为这个上面有保存和重置按钮，这个会方便用户使用，并不会妨碍用户，所以这个最终决定用ToolBar不进行View的创建了就，使用ToolBar我也能进行里面具体的操作
+          也能够减少bug的产生，
+            2. 对于MenuBar上面的元素
+              1. 左侧栏展现的触发按钮
+                  这个按钮采用SVG来设计并加入动画
+              2. 第二个控件应该是TextView来展示当前文件
+              3. 第三个控件和第四个控件默认为隐藏状态，当文件进行编辑后显示这两个按钮
+              4. 第四个为保存按钮
+    2. 进行代码的重构
+16. 现在的主要目的是将关键词的匹配做出来，如何实现？
+    1. 要匹配的语言有哪些？
+      第一次的demo匹配的目标语言为C语言，后续为Java，Perl等等语言
+    2. 对这些语言如何去做匹配？
+      使用Java的正则表达式来做
+    3. 实现的技术是什么？
+      叙述一下实现过程：主线程负责文件的编辑工作，fork一个子线程，这个子线程来负责进行匹配，如果匹配到了关键字，那么通知主线程来做颜色的设置
+17. 对于如果加上android:inputType="textCapSentences|textNoSuggestions"或者setInputType(InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE|InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+    关闭了拼写检查，但是不能够多行拼写，我建议重写isSuggestionsEnabled()方法
+    @Override
+    public boolean isSuggestionsEnabled() {
+        return false;  //禁止拼写检查
+    }
+18. 17中需要解决的问题
+*  问题一： 如果去检测文本是否发生变化  已解决
+*  问题二： 在文本发生变化的时候如何去匹配这些变化的文本  已解决
+*  问题三： 在检测出具有关键字的文本如何去染色  未解决
+      如何为部分为本染色的问题
+19. 这三个基本问题都解决了，但是有一点很差，就是效率还有内存占用很大
+  1. 指针问题还没有解决，每次文字复制完成之后指针总是在最前面
+  2. while循环持续运行的问题

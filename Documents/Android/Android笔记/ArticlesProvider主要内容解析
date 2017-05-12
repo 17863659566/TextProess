@@ -1,0 +1,6 @@
+1. 第一个应用程序命名为ArticlesProvider
+      使用SQLite维护文章信息列表
+      定义了访问这个文章信息列表的URL
+2. 第二个应用程序命名为Article
+      提供管理保存在ArticlesProvider应用程序中的文章信息的界面入口
+      用户可以进行文件的添加、删除、修改文章信息

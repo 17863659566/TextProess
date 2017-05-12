@@ -1,0 +1,22 @@
+1. SVG 使用 <path> 来绘制图像
+2. <path> 介绍
+    M = moveto(M X,Y) ：将画笔移动到指定的坐标位置
+    L = lineto(L X,Y) ：画直线到指定的坐标位置
+    H = horizontal lineto(H X)：画水平线到指定的X坐标位置
+    V = vertical lineto(V Y)：画垂直线到指定的Y坐标位置
+    C = curveto(C X1,Y1,X2,Y2,ENDX,ENDY)：三次贝赛曲线
+    S = smooth curveto(S X2,Y2,ENDX,ENDY)：三次贝赛曲线
+    Q = quadratic Belzier curve(Q X,Y,ENDX,ENDY)：二次贝赛曲线
+    T = smooth quadratic Belzier curveto(T ENDX,ENDY)：映射前面路径后的终点
+    A = elliptical Arc(A RX,RY,XROTATION,FLAG1,FLAG2,X,Y)：弧线
+    Z = closepath()：关闭路径
+    注意点：
+      1. 指令大写代表绝对定位  小写代表相对定位
+      2. 指令和数据间的空格可以省略
+      3. 统一指令出现多次可以只是用一个
+3.对XML文件的属性介绍
+  1. width，height  表示该SVG图形的具体大小
+  2.viewportHeight,viewportWidth 表示SVG图形划分比例
+  3. width，height与viewportWidth，viewportHeight的比例不一致会发生图形的变形
+  4.fillColor  填充的颜色
+  5.pathData  就是绘制的图形
