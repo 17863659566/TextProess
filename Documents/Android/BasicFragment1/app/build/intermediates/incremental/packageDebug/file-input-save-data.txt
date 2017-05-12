@@ -1,0 +1,36 @@
+#Internal package file, do not edit.
+#Sat Apr 29 13:24:37 CST 2017
+2.base=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/resources-debug.ap_
+5.file=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/resources-debug.ap_/res/layout/activity_main.xml
+5.set=ANDROID_RESOURCE
+3.base=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/resources-debug.ap_
+6.file=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/resources-debug.ap_/res/menu/activity_main.xml
+2.set=ANDROID_RESOURCE
+10.set=ANDROID_RESOURCE
+10.file=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/resources-debug.ap_/AndroidManifest.xml
+4.base=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/resources-debug.ap_
+7.file=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/resources-debug.ap_/res/layout/news_articles.xml
+7.set=ANDROID_RESOURCE
+count=11
+0.file=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/resources-debug.ap_/res/drawable-xhdpi-v4/ic_launcher.png
+5.base=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/resources-debug.ap_
+8.file=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/resources-debug.ap_/res/menu-v11/activity_main.xml
+4.set=ANDROID_RESOURCE
+6.base=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/resources-debug.ap_
+1.file=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/transforms/dex/debug/folders/1000/1f/main/classes.dex
+9.set=ANDROID_RESOURCE
+9.file=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/resources-debug.ap_/res/layout/article_view.xml
+10.base=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/resources-debug.ap_
+1.set=DEX
+7.base=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/resources-debug.ap_
+2.file=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/resources-debug.ap_/res/drawable-xhdpi-v4/ic_action_search.png
+6.set=ANDROID_RESOURCE
+0.base=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/resources-debug.ap_
+8.base=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/resources-debug.ap_
+3.file=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/resources-debug.ap_/resources.arsc
+3.set=ANDROID_RESOURCE
+1.base=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/transforms/dex/debug/folders/1000/1f/main
+9.base=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/resources-debug.ap_
+4.file=/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/resources-debug.ap_/res/layout-large-v4/news_articles.xml
+8.set=ANDROID_RESOURCE
+0.set=ANDROID_RESOURCE

@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/merged/debug/drawable-hdpi/ic_action_search.png",
+        "source": "/home/young/Documents/Android/BasicFragment1/app/src/main/res/drawable-hdpi/ic_action_search.png"
+    },
+    {
+        "merged": "/home/young/Documents/Android/BasicFragment1/app/build/intermediates/res/merged/debug/drawable-hdpi/ic_launcher.png",
+        "source": "/home/young/Documents/Android/BasicFragment1/app/src/main/res/drawable-hdpi/ic_launcher.png"
+    }
+]
