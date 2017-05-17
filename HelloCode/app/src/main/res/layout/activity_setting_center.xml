@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/title_bg"
+    android:fitsSystemWindows="true">
+   <com.zh.young.hellocode.UI.TitleView
+       android:id="@+id/skin_center_title"
+       xmlns:custom="http://schemas.android.com/apk/res-auto"
+       custom:title="设置中心"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"/>
+
+</RelativeLayout>

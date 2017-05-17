@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fileManager_bg"
+    android:fitsSystemWindows="true">
+
+    <com.zh.young.hellocode.UI.TitleView
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/title_view"
+        custom:title="选择文件"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/titlebg" />
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/path_display"
+        android:layout_below="@id/title_view"
+        layout="@layout/path_display_view"/>
+    <ListView
+        android:id="@+id/file_list"
+        android:layout_below="@id/path_display"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+    <TextView
+        android:id="@+id/tv_reminder"
+        android:layout_below="@id/file_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="没有内容"/>
+
+</RelativeLayout>
+

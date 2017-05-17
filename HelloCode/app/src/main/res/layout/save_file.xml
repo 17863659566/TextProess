@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/et_save_filename"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入保存的文件名称" />
+
+    <Button
+        android:layout_marginTop="50dp"
+        android:layout_below="@id/et_save_filename"
+        android:id="@+id/bt_positive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="保存" />
+    <Button
+        android:layout_marginTop="50dp"
+        android:layout_alignParentRight="true"
+        android:id="@+id/bt_negative"
+        android:layout_below="@id/et_save_filename"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="取消"/>
+
+</RelativeLayout>

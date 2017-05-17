@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+   <TextView
+       android:id="@+id/about"
+       android:layout_centerInParent="true"
+       android:gravity="center"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="本软件为免费软件，欢迎使用"/>
+    <TextView
+        android:layout_below="@id/about"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="版本号：alpha:0.0.0.1"/>
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:layout_above="@id/about"
+        android:src="@drawable/ic_about_software_24dp"/>
+</RelativeLayout>
